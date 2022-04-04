@@ -9,7 +9,7 @@ namespace TicTacToe5
     {
         private TicTacToeField field = new TicTacToeField();
         public TicTacToeField GameField { get { return field; } set { field = value; } }
-        public int Time { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public double Time { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public event EventHandler GameTick;
         public event EventHandler<GameFinishedEventArgs> GameFinished;
@@ -20,6 +20,11 @@ namespace TicTacToe5
         }
 
         public void SetCellState(int x, int y, CellState newState)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetReady()
         {
             throw new NotImplementedException();
         }

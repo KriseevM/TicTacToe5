@@ -98,6 +98,7 @@ namespace TicTacToe5
         {
             Width = (double)Application.Current.Resources["cellWidth"] * mainProcessor.GameField.Size + 30;
             Height= (double)Application.Current.Resources["cellHeight"] * mainProcessor.GameField.Size + 160;
+            mainProcessor.SetReady();
         }
     }
 }
