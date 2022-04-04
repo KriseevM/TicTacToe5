@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <ImageBrush x:Key="CrossIconBrush" ImageSource="cross.png" />
+    <ImageBrush x:Key="NoughtIconBrush" ImageSource="nought.png" />
+    <BitmapImage x:Key="CrossIcon" UriSource="cross.png" />
+    <BitmapImage x:Key="NoughtIcon" UriSource="nought.png" />
+    <sys:Double x:Key="cellWidth">80</sys:Double>
+    <sys:Double x:Key="cellHeight">80</sys:Double>
+</ResourceDictionary>

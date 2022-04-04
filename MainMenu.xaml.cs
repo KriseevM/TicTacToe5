@@ -23,5 +23,12 @@ namespace TicTacToe5
         {
             InitializeComponent();
         }
+
+        private void winloaded(object sender, RoutedEventArgs e)
+        {
+            NetworkGameProcessor gp = new NetworkGameProcessor();
+            MainWindow mw = new MainWindow(gp);
+            mw.ShowDialog();
+        }
     }
 }
