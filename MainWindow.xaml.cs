@@ -89,7 +89,7 @@ namespace TicTacToe5
             {
                 for (int j = 0; j < proc.GameField.Size; ++j)
                 {
-                    UpdateButtonState(fieldButtons[i, j], proc.GameField[i, j]);
+                    Dispatcher.Invoke(() => UpdateButtonState(fieldButtons[i, j], proc.GameField[i, j]));
                 }
             }
         }
