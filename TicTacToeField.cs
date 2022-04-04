@@ -32,7 +32,7 @@ namespace TicTacToe5
         }
         public void SetCellState(int x, int y, CellState newState)
         {
-            throw new System.NotImplementedException();
+            Cells[x, y].State = newState;
         }
 
         public CellState GetCellState(int x, int y)
