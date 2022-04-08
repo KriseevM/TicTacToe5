@@ -3,7 +3,7 @@
   <Class Name="TicTacToe5.MainWindow" Collapsed="true">
     <Position X="13.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABAAgAAAAAACAAAIAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABAAgAAAAECCAAAIAAA=</HashCode>
       <FileName>MainWindow.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -39,28 +39,28 @@
   <Class Name="TicTacToe5.NetworkGameProcessor">
     <Position X="8.5" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACAAAAAAAAAAAAABAAAAAAAAAEAAAAAAAhAAIAAAQA=</HashCode>
+      <HashCode>AACEAAAAAAAAABAAAAAAAAAAABEAAAAAAAhAAIAAAQA=</HashCode>
       <FileName>NetworkGameProcessor.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TicTacToe5.HotSeatGameProcessor">
-    <Position X="5.25" Y="0.75" Width="1.75" />
+    <Position X="3.5" Y="0.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAEAAAAAAAhAAIAAAQA=</HashCode>
+      <HashCode>AASEAAAAAAAAABAAAAAAAAAAABEAAAAAAAhAAIAAAxA=</HashCode>
       <FileName>HotSeatGameProcessor.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TicTacToe5.ServerGameProcessor">
-    <Position X="6.75" Y="5.5" Width="1.5" />
+    <Position X="6.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ServerGameProcessor.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TicTacToe5.ClientGameProcessor">
-    <Position X="10.5" Y="5.5" Width="1.5" />
+    <Position X="10.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ClientGameProcessor.cs</FileName>
@@ -74,9 +74,9 @@
     </TypeIdentifier>
   </Class>
   <Interface Name="TicTacToe5.IGameProcessor">
-    <Position X="3.5" Y="4.25" Width="1.5" />
+    <Position X="4" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAEAAAAAAAhAAIAAAQA=</HashCode>
+      <HashCode>AAAEAAAAAAAAABAAAAAAAAAAABEAAAAAAAhAAIAAAwA=</HashCode>
       <FileName>IGameProcessor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
