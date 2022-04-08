@@ -37,7 +37,25 @@ namespace TicTacToe5
 
         public CellState GetCellState(int x, int y)
         {
-            throw new System.NotImplementedException();
+            return Cells[x, y].State;
+        }
+
+        public bool IsFull
+        {
+            get
+            {
+                for(int i = 0; i < Size; ++i)
+                {
+                    for (int j = 0; j < Size; ++j)
+                    {
+                        if(Cells[i, j].State == CellState.Empty)
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
         }
     }
 }
