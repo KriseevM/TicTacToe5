@@ -81,7 +81,8 @@ namespace TicTacToe5
                 }
                 if (win1 == false && win2 == false) break;
             }
-            if(win1 || win2) return field[2, 2];
+            if(win1) return field[0, 0];
+            if (win2) return field[field.Size - 1, 0];
             CellState winner = CellState.Empty;
             for (int i = 0; i < field.Size; ++i)
             {
