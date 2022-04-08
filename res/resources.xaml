@@ -5,6 +5,6 @@
     <ImageBrush x:Key="NoughtIconBrush" ImageSource="nought.png" />
     <BitmapImage x:Key="CrossIcon" UriSource="cross.png" />
     <BitmapImage x:Key="NoughtIcon" UriSource="nought.png" />
-    <sys:Double x:Key="cellWidth">80</sys:Double>
-    <sys:Double x:Key="cellHeight">80</sys:Double>
+    <sys:Double x:Key="cellWidth">60</sys:Double>
+    <sys:Double x:Key="cellHeight">60</sys:Double>
 </ResourceDictionary>
