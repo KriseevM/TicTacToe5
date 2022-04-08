@@ -26,7 +26,7 @@ namespace TicTacToe5
 
         private void winloaded(object sender, RoutedEventArgs e)
         {
-            NetworkGameProcessor gp = new NetworkGameProcessor();
+            IGameProcessor gp = new HotSeatGameProcessor(5);
             MainWindow mw = new MainWindow(gp);
             mw.ShowDialog();
         }

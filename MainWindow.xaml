@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TicTacToe5"
         mc:Ignorable="d"
-        Title="MainWindow" Height="654" Width="734" Loaded="winload" x:Name="mainWindow">
+        Title="MainWindow" Height="654" Width="734" Loaded="WindowLoaded" x:Name="mainWindow" Closing="WindowClosing">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>

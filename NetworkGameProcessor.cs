@@ -11,6 +11,8 @@ namespace TicTacToe5
         public TicTacToeField GameField { get { return field; } set { field = value; } }
         public double Time { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
+        public bool IsCrossesTurn => throw new NotImplementedException();
+
         public event EventHandler GameTick;
         public event EventHandler<GameFinishedEventArgs> GameFinished;
 
@@ -19,12 +21,22 @@ namespace TicTacToe5
             throw new NotImplementedException();
         }
 
-        public void SetCellState(int x, int y, CellState newState)
+        public void Interrupt()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetCell(int x, int y)
         {
             throw new NotImplementedException();
         }
 
         public void SetReady()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UnsetCell(int x, int y)
         {
             throw new NotImplementedException();
         }

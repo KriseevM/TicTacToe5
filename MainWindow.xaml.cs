@@ -23,6 +23,7 @@ namespace TicTacToe5
     {
         
         private IGameProcessor mainProcessor;
+        private bool isGameFinished = false;
         private Button[,] fieldButtons;
 
         public MainWindow(IGameProcessor processor)
@@ -51,13 +52,22 @@ namespace TicTacToe5
                     {
                         Margin = new Thickness(0,0,0,0),
                     };
+                    currentButton.Click += GridButton_Click;
                     mainField.Children.Add(fieldButtons[i, j]);
-                    Grid.SetRow(fieldButtons[i, j], i);
-                    Grid.SetColumn(fieldButtons[i, j], j);
+                    Grid.SetRow(fieldButtons[i, j], j);
+                    Grid.SetColumn(fieldButtons[i, j], i);
                     var currentCellState = mainProcessor.GameField[i, j];
                     UpdateButtonState(currentButton, currentCellState);
                 }
             }
+        }
+
+        private void GridButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = (Button)sender;
+            int x = Grid.GetColumn(btn);
+            int y = Grid.GetRow(btn);
+            mainProcessor.SetCell(x, y);
         }
 
         private static void UpdateButtonState(Button currentButton, CellState currentCellState)
@@ -65,6 +75,7 @@ namespace TicTacToe5
             switch (currentCellState)
             {
                 case CellState.Cross:
+                    currentButton.IsEnabled = false;
                     currentButton.Content = new Image() { Source = (BitmapImage)Application.Current.Resources["CrossIcon"] };
                     break;
                 case CellState.Nought:
@@ -79,7 +90,16 @@ namespace TicTacToe5
 
         private void MainProcessor_GameFinished(object sender, GameFinishedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (e.WinnerSide == CellState.Empty)
+            {
+                MessageBox.Show("Ничья!", "Игра окончена");
+            }
+            else
+            {
+                MessageBox.Show("Выиграли " + e.WinnerName, "Игра окончена");
+            }
+            isGameFinished = true;
+            Close();
         }
 
         private void MainProcessor_GameTick(object sender, EventArgs e)
@@ -94,11 +114,25 @@ namespace TicTacToe5
             }
         }
 
-        private void winload(object sender, RoutedEventArgs e)
+        private void WindowLoaded(object sender, RoutedEventArgs e)
         {
             Width = (double)Application.Current.Resources["cellWidth"] * mainProcessor.GameField.Size + 30;
             Height= (double)Application.Current.Resources["cellHeight"] * mainProcessor.GameField.Size + 160;
             mainProcessor.SetReady();
+        }
+
+        private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if(isGameFinished)
+            {
+                return;
+            }
+            e.Cancel = MessageBox.Show("Вы действительно хотите выйти?", "Выйти?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No;
+            if (!e.Cancel)
+            {
+                mainProcessor.Interrupt();
+                mainProcessor.GameTick -= MainProcessor_GameTick;
+            }
         }
     }
 }
