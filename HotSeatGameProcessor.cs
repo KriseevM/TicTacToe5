@@ -13,6 +13,7 @@ namespace TicTacToe5
 
         public HotSeatGameProcessor(int fieldSize)
         {
+            if (fieldSize < 2) throw new ArgumentOutOfRangeException(nameof(fieldSize));
             field = new TicTacToeField(fieldSize);
             timer = new Timer()
             {
