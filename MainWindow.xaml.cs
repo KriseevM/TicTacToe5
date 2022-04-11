@@ -21,11 +21,11 @@ namespace TicTacToe5
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+
         private IGameProcessor mainProcessor;
         private bool isGameFinished = false;
-        private Button[,] fieldButtons;
-
+        private Border[,] fieldRectangles;
+        private CellState[,] displayedCellsStates;
         public MainWindow(IGameProcessor processor)
         {
             InitializeComponent();
@@ -34,82 +34,143 @@ namespace TicTacToe5
             mainProcessor.GameFinished += MainProcessor_GameFinished;
             for (int i = 0; i < mainProcessor.GameField.Size; ++i)
             {
-                mainField.RowDefinitions.Add(new RowDefinition() {
-                    Height = new GridLength((double) Application.Current.Resources["cellWidth"], GridUnitType.Pixel)
+                mainField.RowDefinitions.Add(new RowDefinition()
+                {
+                    Height = new GridLength((double)Application.Current.Resources["cellWidth"], GridUnitType.Pixel)
                 });
-                mainField.ColumnDefinitions.Add(new ColumnDefinition() {
+                mainField.ColumnDefinitions.Add(new ColumnDefinition()
+                {
                     Width = new GridLength((double)Application.Current.Resources["cellWidth"], GridUnitType.Pixel)
                 });
             }
-            
-            fieldButtons = new Button[mainProcessor.GameField.Size, mainProcessor.GameField.Size];
+
+            fieldRectangles = new Border[mainProcessor.GameField.Size, mainProcessor.GameField.Size];
+            displayedCellsStates = new CellState[mainProcessor.GameField.Size, mainProcessor.GameField.Size];
             for (int i = 0; i < mainProcessor.GameField.Size; ++i)
             {
                 for (int j = 0; j < mainProcessor.GameField.Size; ++j)
                 {
-                    Button currentButton;
-                    fieldButtons[i, j] = currentButton = new Button()
+                    Border currentBorder;
+                    fieldRectangles[i, j] = currentBorder = new Border()
                     {
-                        Margin = new Thickness(0,0,0,0),
+                        Margin = new Thickness(0, 0, 0, 0),
                     };
-                    currentButton.Click += GridButton_Click;
-                    mainField.Children.Add(fieldButtons[i, j]);
-                    Grid.SetRow(fieldButtons[i, j], j);
-                    Grid.SetColumn(fieldButtons[i, j], i);
+                    currentBorder.MouseLeftButtonUp += GridRectangle_Click;
+                    currentBorder.BorderBrush = new SolidColorBrush(Colors.Black);
+                    currentBorder.BorderThickness = new Thickness(2,2,2,2);
+                    currentBorder.Background = new SolidColorBrush(Colors.Transparent);
+                    Rectangle rect = new Rectangle() {
+                        Margin = new Thickness(0, 0, 0, 0)
+                    };
+                    currentBorder.Child = rect;
+                    mainField.Children.Add(fieldRectangles[i, j]);
+                    Grid.SetRow(fieldRectangles[i, j], j);
+                    Grid.SetColumn(fieldRectangles[i, j], i);
                     var currentCellState = mainProcessor.GameField[i, j];
-                    UpdateButtonState(currentButton, currentCellState);
+                    displayedCellsStates[i, j] = currentCellState;
+                    UpdateRectangleState((Rectangle)currentBorder.Child, currentCellState, false);
                 }
             }
         }
 
-        private void GridButton_Click(object sender, RoutedEventArgs e)
+        private void GridRectangle_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = (Button)sender;
+            Border btn = (Border)sender;
             int x = Grid.GetColumn(btn);
             int y = Grid.GetRow(btn);
             mainProcessor.SetCell(x, y);
         }
 
-        private static void UpdateButtonState(Button currentButton, CellState currentCellState)
+        private static void UpdateRectangleState(Rectangle currentRectangle, CellState currentCellState, bool doAnimation = true)
         {
-            switch (currentCellState)
+            if (!doAnimation)
             {
-                case CellState.Cross:
-                    currentButton.IsEnabled = false;
-                    currentButton.Content = new Image() { Source = (BitmapImage)Application.Current.Resources["CrossIcon"] };
-                    break;
-                case CellState.Nought:
-                    currentButton.IsEnabled = false;
-                    currentButton.Content= new Image() { Source = (BitmapImage)Application.Current.Resources["NoughtIcon"] };
-                    break;
-                case CellState.Empty:
-                    currentButton.Content = "";
-                    break;
+                RedrawRectangle(currentRectangle, currentCellState);
+                return;
+            }
+            else
+            {
+                DoubleAnimation fadeOut = new DoubleAnimation()
+                {
+                    Duration = new Duration(TimeSpan.FromMilliseconds(50)),
+                    To = 0.0
+                };
+                ColorAnimation backColorAnim = new ColorAnimation()
+                {
+                    Duration = new Duration(TimeSpan.FromMilliseconds(100)),
+                    EasingFunction = new ElasticEase()
+                    {
+                        EasingMode = EasingMode.EaseOut
+                    },
+                    To = currentCellState == CellState.Empty ? Color.FromRgb(255, 0, 0) :
+                        currentCellState == CellState.Cross ? Color.FromRgb(0, 38, 255) : Color.FromRgb(76, 255, 0),
+                    AutoReverse = true
+                };
+                ((SolidColorBrush)((Border)currentRectangle.Parent).Background).BeginAnimation(SolidColorBrush.ColorProperty, backColorAnim);
+                fadeOut.Completed += (object sender, EventArgs e) =>
+                {
+                    RedrawRectangle(currentRectangle, currentCellState);
+                    DoubleAnimation fadeIn = new DoubleAnimation()
+                    {
+                        Duration = new Duration(TimeSpan.FromMilliseconds(100)),
+                        To = 1.0
+                    };
+                    currentRectangle.BeginAnimation(Rectangle.OpacityProperty, fadeIn);
+                };
+                currentRectangle.BeginAnimation(Rectangle.OpacityProperty, fadeOut, HandoffBehavior.Compose);
+            }
+        }
+
+        private static void RedrawRectangle(Rectangle currentRectangle, CellState currentCellState)
+        {
+            if (currentCellState == CellState.Empty)
+            {
+                ((Border)currentRectangle.Parent).IsEnabled = true;
+                currentRectangle.Fill = new SolidColorBrush(Colors.Transparent);
+            }
+            else
+            {
+                ((Border)currentRectangle.Parent).IsEnabled = false;
+                currentRectangle.SetResourceReference(Rectangle.FillProperty, currentCellState == CellState.Cross ? "CrossIconBrush" : "NoughtIconBrush");
             }
         }
 
         private void MainProcessor_GameFinished(object sender, GameFinishedEventArgs e)
         {
+            string winText;
             if (e.WinnerSide == CellState.Empty)
             {
-                MessageBox.Show("Ничья!", "Игра окончена");
+                winText = "Ничья!";
             }
             else
             {
-                MessageBox.Show("Выиграли " + e.WinnerName, "Игра окончена");
+                winText = "Выиграли " + e.WinnerName;
             }
+            finishDialog.Text = winText;
+            this.BeginStoryboard((Storyboard)Resources["FinishDialogShowUp"]);
             isGameFinished = true;
-            Close();
         }
 
         private void MainProcessor_GameTick(object sender, EventArgs e)
         {
             var proc = (IGameProcessor)sender;
+            Dispatcher.Invoke(() => {
+                timeLabel.Content = Math.Ceiling(proc.Time) + "с";
+                currentTurnLabel.Content = proc.IsCrossesTurn ? "крестики" : "нолики";
+            });
             for (int i = 0; i < proc.GameField.Size; ++i)
             {
                 for (int j = 0; j < proc.GameField.Size; ++j)
                 {
-                    Dispatcher.Invoke(() => UpdateButtonState(fieldButtons[i, j], proc.GameField[i, j]));
+
+                    Dispatcher.Invoke(() => 
+                    {
+                        if(proc.GameField[i, j] != displayedCellsStates[i, j])
+                        {
+                            displayedCellsStates[i, j] = proc.GameField[i, j];
+                            UpdateRectangleState((Rectangle)fieldRectangles[i, j].Child, displayedCellsStates[i, j]);
+                        }                        
+                    });
                 }
             }
         }
@@ -117,13 +178,13 @@ namespace TicTacToe5
         private void WindowLoaded(object sender, RoutedEventArgs e)
         {
             Width = (double)Application.Current.Resources["cellWidth"] * mainProcessor.GameField.Size + 30;
-            Height= (double)Application.Current.Resources["cellHeight"] * mainProcessor.GameField.Size + 160;
+            Height = (double)Application.Current.Resources["cellHeight"] * mainProcessor.GameField.Size + 160;
             mainProcessor.SetReady();
         }
 
         private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if(isGameFinished)
+            if (isGameFinished)
             {
                 return;
             }
@@ -133,6 +194,11 @@ namespace TicTacToe5
                 mainProcessor.Interrupt();
                 mainProcessor.GameTick -= MainProcessor_GameTick;
             }
+        }
+
+        private void MessageDialog_Confirm(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

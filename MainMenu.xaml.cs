@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -24,11 +25,48 @@ namespace TicTacToe5
             InitializeComponent();
         }
 
-        private void winloaded(object sender, RoutedEventArgs e)
+        private void button_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            IGameProcessor gp = new HotSeatGameProcessor(5);
+            Console.WriteLine("Down");
+        }
+
+        private void button_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Console.WriteLine("Leave");
+        }
+
+        private void button_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Console.WriteLine("Enter");
+        }
+
+        private void quitButtonClick(object sender, RoutedEventArgs e)
+        {
+            this.BeginStoryboard((Storyboard)Resources["ExitDialogShowUp"]);
+        }
+
+        private void exitDialog_Confirm(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void exitDialog_Reject(object sender, EventArgs e)
+        {
+            this.BeginStoryboard((Storyboard)Resources["ExitDialogHide"]);
+        }
+
+        private void button1Player_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void button2Players_Click(object sender, RoutedEventArgs e)
+        {
+            Hide();
+            HotSeatGameProcessor gp = new HotSeatGameProcessor(9);
             MainWindow mw = new MainWindow(gp);
             mw.ShowDialog();
+            Show();
         }
     }
 }

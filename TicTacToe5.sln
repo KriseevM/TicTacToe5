@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
+# Blend for Visual Studio Version 16
 VisualStudioVersion = 16.0.32228.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToe5", "TicTacToe5.csproj", "{28544BB7-9875-4A1C-99AA-0CCF88397A7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTacToe5", "TicTacToe5.csproj", "{28544BB7-9875-4A1C-99AA-0CCF88397A7C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTacToe5Tests", "..\TicTacToe5Tests\TicTacToe5Tests.csproj", "{3DA7939A-3140-45C4-BF0B-A3151EF44AE2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{28544BB7-9875-4A1C-99AA-0CCF88397A7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28544BB7-9875-4A1C-99AA-0CCF88397A7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28544BB7-9875-4A1C-99AA-0CCF88397A7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DA7939A-3140-45C4-BF0B-A3151EF44AE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DA7939A-3140-45C4-BF0B-A3151EF44AE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DA7939A-3140-45C4-BF0B-A3151EF44AE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DA7939A-3140-45C4-BF0B-A3151EF44AE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

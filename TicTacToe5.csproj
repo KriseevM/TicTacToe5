@@ -8,11 +8,19 @@
 
   <ItemGroup>
     <None Remove="res\cross.png" />
+    <None Remove="res\filled.png" />
+    <None Remove="res\logo.png" />
     <None Remove="res\nought.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="res\cross.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="res\filled.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="res\logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="res\nought.png">

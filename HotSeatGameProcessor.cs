@@ -11,10 +11,12 @@ namespace TicTacToe5
         TicTacToeField field;
         Timer timer;
 
-        public HotSeatGameProcessor(int fieldSize)
+        public HotSeatGameProcessor(int fieldSize, int rowLength = 5)
         {
-            if (fieldSize < 2) throw new ArgumentOutOfRangeException(nameof(fieldSize));
-            field = new TicTacToeField(fieldSize);
+            
+            if (fieldSize < 3) throw new ArgumentOutOfRangeException(nameof(fieldSize));
+
+            field = new TicTacToeField(fieldSize, rowLength);
             timer = new Timer()
             {
                 Interval = 100
@@ -24,7 +26,7 @@ namespace TicTacToe5
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Time += 0.1;
+            Time += timer.Interval / 1000;
             GameTick.Invoke(this, EventArgs.Empty);
         }
 
@@ -48,66 +50,22 @@ namespace TicTacToe5
             if (GameField[x, y] != CellState.Empty) return;
             GameField[x, y] = IsCrossesTurn ? CellState.Cross : CellState.Nought;
             GameTick.Invoke(this, EventArgs.Empty);
-            var winner = CheckWinning();
+            var winner = field.WinnerSide;
             if (winner == CellState.Empty)
             {
                 if(GameField.IsFull)
                 {
                     GameFinished.Invoke(this, new GameFinishedEventArgs("", CellState.Empty));
+                    timer.Stop();
                 }
                 isCrossesTurn = !isCrossesTurn;
             }
             else
             {
-                GameFinished.Invoke(this, new GameFinishedEventArgs(winner == CellState.Cross ? "крестики" : "нолики", winner));
                 timer.Stop();
+                GameFinished.Invoke(this, new GameFinishedEventArgs(winner == CellState.Cross ? "крестики" : "нолики", winner));
             }
 
-        }
-
-        public CellState CheckWinning()
-        {
-            
-            bool win1 = true, win2 = true;
-            for(int i = 1; i < field.Size; ++i)
-            {
-                if(field[i - 1, i - 1] == CellState.Empty || field[i, i] != field[i - 1, i - 1])
-                {
-                    win1 = false;
-                }
-                if(field[field.Size - i, i - 1] == CellState.Empty || field[field.Size - 1 - i, i] != field[field.Size - i, i - 1])
-                {
-                    win2 = false;
-                }
-                if (win1 == false && win2 == false) break;
-            }
-            if(win1) return field[0, 0];
-            if (win2) return field[field.Size - 1, 0];
-            CellState winner = CellState.Empty;
-            for (int i = 0; i < field.Size; ++i)
-            {
-                bool rowWins = true;
-                bool colWins = true;
-                for (int j = 1; j < field.Size; ++j)
-                {
-                    colWins = colWins && field[i, j - 1] != CellState.Empty && field[i, j] == field[i, j - 1];
-                }
-                if (colWins)
-                {
-                    winner = field[i, 0];
-                    break;
-                }
-                for (int j = 1; j < field.Size; ++j)
-                {
-                    rowWins = rowWins && field[j - 1, i] != CellState.Empty && field[j, i] == field[j - 1, i];
-                }
-                if (rowWins)
-                {
-                    winner = field[0, i];
-                    break;
-                }
-            }
-            return winner;
         }
 
         public void SetReady()

@@ -5,6 +5,110 @@
     <ImageBrush x:Key="NoughtIconBrush" ImageSource="nought.png" />
     <BitmapImage x:Key="CrossIcon" UriSource="cross.png" />
     <BitmapImage x:Key="NoughtIcon" UriSource="nought.png" />
+    <BitmapImage x:Key="filled" UriSource="filled.png" />
+    <BitmapImage x:Key="gameLogo" UriSource="logo.png" />
     <sys:Double x:Key="cellWidth">60</sys:Double>
     <sys:Double x:Key="cellHeight">60</sys:Double>
+
+    <Style TargetType="Button">
+        <Setter Property="SnapsToDevicePixels"
+          Value="true" />
+        <Setter Property="OverridesDefaultStyle"
+          Value="true" />
+        <Setter Property="Margin" Value="0, 5, 0, 5" />
+        <Setter Property="Padding" Value="5, 5, 5, 5" />
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect></DropShadowEffect>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Width" Value="100" />
+        <Setter Property="Background" Value="Red" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="1" ScaleY="1"></ScaleTransform>
+                </TransformGroup>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" BorderBrush="Transparent" CornerRadius="10" Background="{TemplateBinding Background}" Width="{TemplateBinding Width}"
+                                Height="{TemplateBinding Height}" TextBlock.Foreground="{TemplateBinding Foreground}" Padding="{TemplateBinding Padding}" RenderTransformOrigin="0.5, 0.5">
+                        <ContentPresenter
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            RecognizesAccessKey="True" />
+                        <Border.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX="1" ScaleY="1" x:Name="btnScaleTransform"></ScaleTransform>
+                            </TransformGroup>
+                        </Border.RenderTransform>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="ScaleX" Storyboard.TargetName="btnScaleTransform"
+                                        To="1"
+                                        Duration="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BounceEase Bounces="1" Bounciness="5"></BounceEase>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation Storyboard.TargetProperty="ScaleY" Storyboard.TargetName="btnScaleTransform"
+                                        To="1"
+                                        Duration="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BounceEase Bounces="1" Bounciness="5" EasingMode="EaseInOut">
+                                                </BounceEase>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="ScaleX" Storyboard.TargetName="btnScaleTransform"
+                                        To="0.92"
+                                        Duration="0:0:0.1">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="2" EasingMode="EaseInOut"></ExponentialEase>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation Storyboard.TargetProperty="ScaleY" Storyboard.TargetName="btnScaleTransform"
+                                        To="0.92"
+                                        Duration="0:0:0.1">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="2" EasingMode="EaseInOut"></ExponentialEase>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="ScaleX" Storyboard.TargetName="btnScaleTransform"
+                                        To="0.85"
+                                        Duration="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation Storyboard.TargetProperty="ScaleY" Storyboard.TargetName="btnScaleTransform"
+                                        To="0.85"
+                                        Duration="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
 </ResourceDictionary>
