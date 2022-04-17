@@ -63,11 +63,9 @@
                 <Label x:Name="timeLabel" Content="0" FontSize="36" VerticalContentAlignment="Stretch" Foreground="#FF0F00A4"/>
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                <Label Content="Ходят" FontSize="36"/>
+                <Label Content="Ходит" FontSize="36"/>
                 <Label x:Name="currentTurnLabel" Content="крестики" FontSize="36" HorizontalContentAlignment="Center"/>
             </StackPanel>
         </Grid>
-        <components:MessageDialog x:Name="finishDialog" DialogBackground="#CFCCC0CC" Confirm="MessageDialog_Confirm" Opacity="0" Heading="Игра окончена!" Padding="20,175,20,225" />
-
     </Grid>
 </Window>

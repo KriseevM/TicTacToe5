@@ -19,26 +19,10 @@ namespace TicTacToe5.components
     /// <summary>
     /// Логика взаимодействия для ConfirmDialog.xaml
     /// </summary>
-    public partial class ConfirmDialog : UserControl
+    public partial class ConfirmDialog : Window
     {
         public static DependencyProperty TextProperty;
         public static DependencyProperty DialogBackgroundProperty;
-
-        public static RoutedEvent ConfirmEvent = EventManager.RegisterRoutedEvent("Confirm", RoutingStrategy.Direct, typeof(EventHandler), typeof(ConfirmDialog));
-
-        public static RoutedEvent RejectEvent = EventManager.RegisterRoutedEvent("Reject", RoutingStrategy.Direct, typeof(EventHandler), typeof(ConfirmDialog));
-
-        public event EventHandler Confirm
-        {
-            add => AddHandler(ConfirmEvent, value);
-            remove => RemoveHandler(ConfirmEvent, value);
-        }
-        public event EventHandler Reject
-        {
-            add => AddHandler(RejectEvent, value);
-            remove => RemoveHandler(RejectEvent, value);
-        }
-
 
         static ConfirmDialog()
         {
@@ -58,35 +42,28 @@ namespace TicTacToe5.components
         public ConfirmDialog()
         {
             InitializeComponent();
-
-            DependencyPropertyDescriptor dpd = DependencyPropertyDescriptor
-                .FromProperty(ConfirmDialog.OpacityProperty, typeof(ConfirmDialog));
-            if (dpd != null)
-            {
-                dpd.AddValueChanged(this, HandleOpacityChange);
-            }
-        }
-
-        private void HandleOpacityChange(object sender, EventArgs e)
-        {
-            if(this.Opacity < 0.001)
-            {
-                Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                Visibility = Visibility.Visible;
-            }
         }
 
         private void NoClick(object sender, RoutedEventArgs e)
         {
-            RaiseEvent(new RoutedEventArgs(RejectEvent));
+            
+            Close();
         }
 
         private void YesClick(object sender, RoutedEventArgs e)
         {
-            RaiseEvent(new RoutedEventArgs(ConfirmEvent));
+            this.DialogResult = true;
+            Close();
+        }
+        private void CloseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
+            Close();
+        }
+
+        private void root_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
         }
     }
 }

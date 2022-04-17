@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TicTacToe5.components;
 
 namespace TicTacToe5
 {
@@ -42,31 +43,42 @@ namespace TicTacToe5
 
         private void quitButtonClick(object sender, RoutedEventArgs e)
         {
-            this.BeginStoryboard((Storyboard)Resources["ExitDialogShowUp"]);
-        }
-
-        private void exitDialog_Confirm(object sender, EventArgs e)
-        {
             Close();
-        }
-
-        private void exitDialog_Reject(object sender, EventArgs e)
-        {
-            this.BeginStoryboard((Storyboard)Resources["ExitDialogHide"]);
+            
         }
 
         private void button1Player_Click(object sender, RoutedEventArgs e)
         {
-
+            IGameProcessor gp = new SinglePlayerGameProcessor(10);
+            Hide();
+            MainWindow mw = new MainWindow(gp);
+            mw.ShowDialog();
+            Show();
         }
 
         private void button2Players_Click(object sender, RoutedEventArgs e)
         {
+            
+            PlayerNameSelectorDialog dialog = new PlayerNameSelectorDialog();
+            dialog.ShowDialog();
+            if(String.IsNullOrEmpty(dialog.Player1Name) || String.IsNullOrEmpty(dialog.Player2Name))
+            {
+                return;
+            }
             Hide();
-            HotSeatGameProcessor gp = new HotSeatGameProcessor(9);
+            IGameProcessor gp = new HotSeatGameProcessor(10, 5, dialog.Player1Name, dialog.Player2Name);
             MainWindow mw = new MainWindow(gp);
             mw.ShowDialog();
             Show();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            ConfirmDialog cf = new ConfirmDialog()
+            {
+                Text = "Выйти?"
+            };
+            e.Cancel = cf.ShowDialog() == false;
         }
     }
 }

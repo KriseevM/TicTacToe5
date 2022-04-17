@@ -13,6 +13,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TicTacToe5.components;
 
 namespace TicTacToe5
 {
@@ -144,11 +145,19 @@ namespace TicTacToe5
             }
             else
             {
-                winText = "Выиграли " + e.WinnerName;
+                winText = "Выиграл " + e.WinnerName;
             }
-            finishDialog.Text = winText;
-            this.BeginStoryboard((Storyboard)Resources["FinishDialogShowUp"]);
+            MessageDialog finishDialog = new MessageDialog()
+            {
+                Heading = "Игра окончена",
+                Text = winText
+            };
+            //finishDialog.Text = winText;
+            //this.BeginStoryboard((Storyboard)Resources["FinishDialogShowUp"]);
+            //MessageBox.Show(winText, "Игра окончена", MessageBoxButton.OK);
+            finishDialog.ShowDialog();
             isGameFinished = true;
+            Close();
         }
 
         private void MainProcessor_GameTick(object sender, EventArgs e)
@@ -156,7 +165,7 @@ namespace TicTacToe5
             var proc = (IGameProcessor)sender;
             Dispatcher.Invoke(() => {
                 timeLabel.Content = Math.Ceiling(proc.Time) + "с";
-                currentTurnLabel.Content = proc.IsCrossesTurn ? "крестики" : "нолики";
+                currentTurnLabel.Content = proc.CurrentPlayer;
             });
             for (int i = 0; i < proc.GameField.Size; ++i)
             {
@@ -188,7 +197,11 @@ namespace TicTacToe5
             {
                 return;
             }
-            e.Cancel = MessageBox.Show("Вы действительно хотите выйти?", "Выйти?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No;
+            ConfirmDialog cf = new ConfirmDialog()
+            {
+                Text = "Выйти?"
+            };
+            e.Cancel = cf.ShowDialog() == false;
             if (!e.Cancel)
             {
                 mainProcessor.Interrupt();

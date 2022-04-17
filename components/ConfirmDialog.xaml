@@ -1,13 +1,12 @@
-﻿<UserControl x:Class="TicTacToe5.components.ConfirmDialog"
+﻿<Window x:Class="TicTacToe5.components.ConfirmDialog"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TicTacToe5.components"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Padding="100" x:Name="root" Background="#00000000">
-    <Grid Background="#00000000">
-        <Border CornerRadius="15" Background="{Binding DialogBackground, ElementName=root}" Padding="15">
+             mc:Ignorable="d" Background="Transparent" AllowsTransparency="True" MouseLeftButtonDown="root_MouseLeftButtonDown" ShowInTaskbar="False" Padding="100" x:Name="root" Height="251" Width="448" WindowStartupLocation="CenterOwner" WindowStyle="None">
+    <Grid>
+        <Border Padding="0, 0, 0, 15" Background="White" BorderBrush="Black" BorderThickness="1" CornerRadius="5">
             <Grid >
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -19,7 +18,8 @@
                     <Button Content="Да" Margin="10,1,10,1" Background="DarkMagenta" Padding="0" FontSize="32" FontWeight="Bold" Click="YesClick"/>
 
                 </StackPanel>
+                <Button Background="Transparent" x:Name="CloseBtn" Click="CloseBtn_Click"  Foreground="Black" Content="x" Width="30" FontSize="20" Height="30" HorizontalAlignment="Right" Padding="0" VerticalAlignment="Top" Margin="0,5,10,0" />
             </Grid>
         </Border>
     </Grid>
-</UserControl>
+</Window>

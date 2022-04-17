@@ -11,6 +11,7 @@ namespace TicTacToe5
         public event System.EventHandler<GameFinishedEventArgs> GameFinished;
 
         public bool IsCrossesTurn { get; }
+        public string CurrentPlayer { get; }
 
         public TicTacToeField GameField { get; }
         public double Time { get; }

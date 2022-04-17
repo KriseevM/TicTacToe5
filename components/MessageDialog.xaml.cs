@@ -19,28 +19,16 @@ namespace TicTacToe5.components
     /// <summary>
     /// Логика взаимодействия для MessageDialog.xaml
     /// </summary>
-    public partial class MessageDialog : UserControl
+    public partial class MessageDialog : Window
     {
         public static DependencyProperty TextProperty;
         public static DependencyProperty HeadingProperty;
-        public static DependencyProperty DialogBackgroundProperty;
-
-        public static RoutedEvent ConfirmEvent = EventManager.RegisterRoutedEvent("Confirm", RoutingStrategy.Direct, typeof(EventHandler), typeof(MessageDialog));
-
-        public static RoutedEvent RejectEvent = EventManager.RegisterRoutedEvent("Reject", RoutingStrategy.Direct, typeof(EventHandler), typeof(MessageDialog));
-
-        public event EventHandler Confirm
-        {
-            add => AddHandler(ConfirmEvent, value);
-            remove => RemoveHandler(ConfirmEvent, value);
-        }
 
 
         static MessageDialog()
         {
             TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(MessageDialog));
             HeadingProperty = DependencyProperty.Register("Heading", typeof(string), typeof(MessageDialog));
-            DialogBackgroundProperty = DependencyProperty.Register("DialogBackground", typeof(Brush), typeof(MessageDialog));
         }
         public string Text
         {
@@ -60,30 +48,21 @@ namespace TicTacToe5.components
         public MessageDialog()
         {
             InitializeComponent();
-
-            DependencyPropertyDescriptor dpd = DependencyPropertyDescriptor
-                .FromProperty(MessageDialog.OpacityProperty, typeof(MessageDialog));
-            if (dpd != null)
-            {
-                dpd.AddValueChanged(this, HandleOpacityChange);
-            }
         }
 
-        private void HandleOpacityChange(object sender, EventArgs e)
+
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (this.Opacity < 0.001)
-            {
-                Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                Visibility = Visibility.Visible;
-            }
+            Close();
+        }
+        private void CloseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
 
-        private void YesClick(object sender, RoutedEventArgs e)
+        private void root_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            RaiseEvent(new RoutedEventArgs(ConfirmEvent));
+            this.DragMove();
         }
     }
 }
