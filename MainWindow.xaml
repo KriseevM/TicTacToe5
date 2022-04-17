@@ -7,19 +7,6 @@
         xmlns:components="clr-namespace:TicTacToe5.components" x:Class="TicTacToe5.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="654" Width="734" Loaded="WindowLoaded" x:Name="mainWindow" Closing="WindowClosing" ResizeMode="NoResize">
-    <Window.Resources>
-        <Storyboard x:Key="FinishDialogShowUp">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="finishDialog" Storyboard.TargetProperty="(UIElement.Opacity)">
-                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="00:00:00.5500000" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="00:00:01.0000000" Value="1"/>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="mainContent" Storyboard.TargetProperty="(UIElement.Effect).(BlurEffect.Radius)">
-                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="00:00:00.5000000" Value="30"/>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
-    </Window.Resources>
     <Grid>
 
         <Grid x:Name="mainContent" Grid.Row="0">

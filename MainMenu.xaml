@@ -11,28 +11,6 @@
         <Color x:Key="Button1PlayerColor" R="30" G="176" B="0"  A="255"/>
         <Color x:Key="Button2PlayerColor" R="30" G="0" B="176"  A="255"/>
         <Color x:Key="ButtonQuitColor" R="176" G="0" B="30"  A="255"/>
-        <Storyboard x:Key="ExitDialogShowUp">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="exitDialog" Storyboard.TargetProperty="(UIElement.Opacity)">
-                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="00:00:00.1500000" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="1"/>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="stackPanel" Storyboard.TargetProperty="(UIElement.Effect).(BlurEffect.Radius)">
-                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="00:00:00.1500000" Value="20"/>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
-        <Storyboard x:Key="ExitDialogHide">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="exitDialog" Storyboard.TargetProperty="(UIElement.Opacity)">
-                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="1"/>
-                <EasingDoubleKeyFrame KeyTime="00:00:00.1500000" Value="0"/>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="stackPanel" Storyboard.TargetProperty="(UIElement.Effect).(BlurEffect.Radius)">
-                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="20"/>
-                <EasingDoubleKeyFrame KeyTime="00:00:00.1500000" Value="20"/>
-                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0"/>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
     </Window.Resources>
     <Grid>
 

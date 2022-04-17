@@ -9,9 +9,9 @@ namespace TicTacToe5
     public class SinglePlayerGameProcessor : LocalGameProcessor
     {
 
-        public class ByValue : IComparer<(int, int)>
+        public class ComparerByPairValue : IComparer<(int, int)>
         {
-            public ByValue()
+            public ComparerByPairValue()
             {
             }
             public int Compare((int, int) x, (int, int) y)
@@ -48,7 +48,7 @@ namespace TicTacToe5
             {
                 for (int j = 0; j < field.Size; j++)
                 {
-                    patternsMap[i, j] = new SortedSet<(int, int)>(new ByValue());
+                    patternsMap[i, j] = new SortedSet<(int, int)>(new ComparerByPairValue());
                     for(int k = 0; k < 8; ++k)
                     {
                         patternsMap[i, j].Add((k, GetPatternDepth(i, j, k)));
