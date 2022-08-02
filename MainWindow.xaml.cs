@@ -33,7 +33,7 @@ namespace TicTacToe5
             mainProcessor = processor;
             mainProcessor.GameTick += MainProcessor_GameTick;
             mainProcessor.GameFinished += MainProcessor_GameFinished;
-            for (int i = 0; i < mainProcessor.GameField.Size; ++i)
+            for (int i = 0; i < mainProcessor.FieldSize; ++i)
             {
                 mainField.RowDefinitions.Add(new RowDefinition()
                 {
@@ -45,11 +45,11 @@ namespace TicTacToe5
                 });
             }
 
-            fieldRectangles = new Border[mainProcessor.GameField.Size, mainProcessor.GameField.Size];
-            displayedCellsStates = new CellState[mainProcessor.GameField.Size, mainProcessor.GameField.Size];
-            for (int i = 0; i < mainProcessor.GameField.Size; ++i)
+            fieldRectangles = new Border[mainProcessor.FieldSize, mainProcessor.FieldSize];
+            displayedCellsStates = new CellState[mainProcessor.FieldSize, mainProcessor.FieldSize];
+            for (int i = 0; i < mainProcessor.FieldSize; ++i)
             {
-                for (int j = 0; j < mainProcessor.GameField.Size; ++j)
+                for (int j = 0; j < mainProcessor.FieldSize; ++j)
                 {
                     Border currentBorder;
                     fieldRectangles[i, j] = currentBorder = new Border()
@@ -167,16 +167,16 @@ namespace TicTacToe5
                 timeLabel.Content = Math.Ceiling(proc.Time) + "с";
                 currentTurnLabel.Content = proc.CurrentPlayer;
             });
-            for (int i = 0; i < proc.GameField.Size; ++i)
+            for (int i = 0; i < proc.FieldSize; ++i)
             {
-                for (int j = 0; j < proc.GameField.Size; ++j)
+                for (int j = 0; j < proc.FieldSize; ++j)
                 {
 
                     Dispatcher.Invoke(() => 
                     {
-                        if(proc.GameField[i, j] != displayedCellsStates[i, j])
+                        if(proc.GetCellState(i, j) != displayedCellsStates[i, j])
                         {
-                            displayedCellsStates[i, j] = proc.GameField[i, j];
+                            displayedCellsStates[i, j] = proc.GetCellState(i, j);
                             UpdateRectangleState((Rectangle)fieldRectangles[i, j].Child, displayedCellsStates[i, j]);
                         }                        
                     });
@@ -186,8 +186,8 @@ namespace TicTacToe5
 
         private void WindowLoaded(object sender, RoutedEventArgs e)
         {
-            Width = (double)Application.Current.Resources["cellWidth"] * mainProcessor.GameField.Size + 30;
-            Height = (double)Application.Current.Resources["cellHeight"] * mainProcessor.GameField.Size + 160;
+            Width = (double)Application.Current.Resources["cellWidth"] * mainProcessor.FieldSize + 30;
+            Height = (double)Application.Current.Resources["cellHeight"] * mainProcessor.FieldSize + 160;
             mainProcessor.SetReady();
         }
 

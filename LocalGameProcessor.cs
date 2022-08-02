@@ -33,11 +33,10 @@ namespace TicTacToe5
             Application.Current.Dispatcher.Invoke(() => GameTick.Invoke(this, EventArgs.Empty));
         }
 
-        public TicTacToeField GameField => field;
-
         public double Time { get; set; } = 0.0;
 
         protected bool isCrossesTurn = true;
+        public int FieldSize => field.Size;
         public bool IsCrossesTurn => isCrossesTurn;
 
         protected string currentPlayer = "";
@@ -53,8 +52,8 @@ namespace TicTacToe5
 
         public virtual void SetCell(int x, int y)
         {
-            if (GameField[x, y] != CellState.Empty) return;
-            GameField[x, y] = IsCrossesTurn ? CellState.Cross : CellState.Nought;
+            if (field[x, y] != CellState.Empty) return;
+            field[x, y] = IsCrossesTurn ? CellState.Cross : CellState.Nought;
             currentPlayer = isCrossesTurn ? player2Name : player1Name;
             GameTick.Invoke(this, EventArgs.Empty);
             CheckIfGameFinished();
@@ -65,7 +64,7 @@ namespace TicTacToe5
             var winner = field.WinnerSide;
             if (winner == CellState.Empty)
             {
-                if (GameField.IsFull)
+                if (field.IsFull)
                 {
                     GameFinished.Invoke(this, new GameFinishedEventArgs("", CellState.Empty));
                     timer.Stop();
